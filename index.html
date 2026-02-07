@@ -21,7 +21,6 @@
             height: 100vh; margin: 0; overflow: hidden; color: #4a4a4a;
         }
 
-        /* Floating Hearts */
         .heart {
             position: absolute; color: var(--secondary);
             font-size: 20px; z-index: 1;
@@ -33,7 +32,6 @@
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        /* Glassmorphism Card */
         .container { 
             background: rgba(255, 255, 255, 0.7); 
             backdrop-filter: blur(15px);
@@ -44,12 +42,12 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.05); 
             width: 85%; max-width: 380px; 
             z-index: 10; transition: all 0.5s ease;
+            text-align: center;
         }
 
         h1 { font-family: 'Dancing Script', cursive; color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; }
         p { font-weight: 500; line-height: 1.6; }
 
-        /* Elegant Inputs & Buttons */
         input { 
             width: 100%; padding: 15px; border-radius: 15px; border: none;
             background: rgba(255, 255, 255, 0.9); margin-bottom: 20px;
@@ -66,24 +64,34 @@
         }
 
         #yesBtn { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3); }
+        
         #noBtn { 
             background: #6c757d; color: white; position: absolute; 
             left: 50%; transform: translateX(-50%); top: 80px;
         }
 
-        .hidden { display: none; opacity: 0; transform: scale(0.9); }
-        .visible { display: block; opacity: 1; transform: scale(1); }
+        .hidden { display: none !important; }
+        .visible { display: block !important; animation: fadeIn 0.8s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
 
         .success-icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
     </style>
 </head>
 <body>
 
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
     <div id="loginStep" class="container">
         <h1>For Someone Special</h1>
         <p>Before we proceed, please tell me who you are...</p>
         <input type="text" id="nameInput" placeholder="Your Name" autocomplete="off">
-        <button id="yesBtn" onclick="nextStep()">Open Message</button>
+        <button id="entryBtn" style="background: var(--primary); color: white;" onclick="nextStep()">Open Message</button>
     </div>
 
     <div id="questionStep" class="container hidden">
@@ -99,75 +107,67 @@
     <div id="successStep" class="container hidden">
         <span class="success-icon">🥰</span>
         <h1>It's a Date!</h1>
-        <p>You've made me the happiest person! I've been notified of your answer. ❤️</p>
+        <p>You've made me the happiest person! ❤️</p>
     </div>
 
     <script>
-  <audio id="bgMusic" loop>
-    <source src="YOUR_MP3_URL_HERE.mp3" type="audio/mpeg">
-</audio>
+        const music = document.getElementById('bgMusic');
 
-<script>
-    const music = document.getElementById('bgMusic');
-
-    // Create background hearts
-    function createHeart() {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerHTML = '❤️';
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 6000);
-    }
-    setInterval(createHeart, 400);
-
-    function nextStep() {
-        const name = document.getElementById('nameInput').value;
-        if(name.trim() !== "") {
-            // Start Music on first interaction
-            music.play().catch(e => console.log("Audio play blocked until further interaction"));
-            
-            document.getElementById('loginStep').style.display = 'none';
-            const qStep = document.getElementById('questionStep');
-            qStep.classList.remove('hidden');
-            qStep.classList.add('visible');
-            document.getElementById('greeting').innerText = "Hi " + name + " ✨";
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
         }
-    }
+        setInterval(createHeart, 400);
 
-    function moveButton() {
-        const noBtn = document.getElementById('noBtn');
-        const padding = 50;
-        const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding) + padding/2;
-        const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding) + padding/2;
-        
-        noBtn.style.position = 'fixed';
-        noBtn.style.left = x + 'px';
-        noBtn.style.top = y + 'px';
-        noBtn.style.zIndex = "100";
-    }
+        function nextStep() {
+            const name = document.getElementById('nameInput').value;
+            if(name.trim() !== "") {
+                // Play music
+                music.play().catch(e => console.log("Audio waiting for interaction"));
+                
+                document.getElementById('loginStep').classList.add('hidden');
+                const qStep = document.getElementById('questionStep');
+                qStep.classList.remove('hidden');
+                qStep.classList.add('visible');
+                document.getElementById('greeting').innerText = "Hi " + name + " ✨";
+            } else {
+                alert("Please enter your name first! ❤️");
+            }
+        }
 
-    function celebrate() {
-        // Optional: Change music to a more upbeat song here!
-        // music.src = "celebration_song.mp3";
-        // music.play();
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            const padding = 100;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding) + padding/2;
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding) + padding/2;
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.zIndex = "100";
+        }
 
-        document.getElementById('questionStep').style.display = 'none';
-        const sStep = document.getElementById('successStep');
-        sStep.classList.remove('hidden');
-        sStep.classList.add('visible');
+        function celebrate() {
+            document.getElementById('questionStep').classList.add('hidden');
+            const sStep = document.getElementById('successStep');
+            sStep.classList.remove('hidden');
+            sStep.classList.add('visible');
 
-        fetch("https://formsubmit.co/ajax/YOUR_EMAIL_HERE", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                Answer: "YES! ❤️",
-                Partner: document.getElementById('nameInput').value
-            })
-        });
-    }
-</script>
+            // Replace with your real email before uploading
+            fetch("https://formsubmit.co/ajax/YOUR_EMAIL_HERE", {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    Answer: "YES! ❤️",
+                    Partner: document.getElementById('nameInput').value
+                })
+            });
+        }
+    </script>
 </body>
 </html>
-
