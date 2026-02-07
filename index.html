@@ -6,21 +6,14 @@
     <title>A Special Message ❤️</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #ff4d6d;
-            --secondary: #ff85a1;
-            --bg: #fff0f3;
-        }
-
+        :root { --primary: #ff4d6d; --secondary: #ff85a1; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
         body { 
             font-family: 'Quicksand', sans-serif; 
             background: radial-gradient(circle at center, #ffffff 0%, #ffdde1 100%);
             display: flex; justify-content: center; align-items: center; 
-            height: 100vh; margin: 0; overflow: hidden; color: #4a4a4a;
+            height: 100vh; margin: 0; overflow: hidden; text-align: center;
         }
-
         .heart {
             position: absolute; color: var(--secondary);
             font-size: 20px; z-index: 1;
@@ -31,54 +24,27 @@
             20% { opacity: 0.6; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
-
         .container { 
-            background: rgba(255, 255, 255, 0.7); 
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.8); 
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 2.5rem 1.5rem; 
-            border-radius: 30px; 
+            padding: 2.5rem 1.5rem; border-radius: 30px; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.05); 
-            width: 85%; max-width: 380px; 
-            z-index: 10; transition: all 0.5s ease;
-            text-align: center;
+            width: 85%; max-width: 380px; z-index: 10;
         }
-
         h1 { font-family: 'Dancing Script', cursive; color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; }
-        p { font-weight: 500; line-height: 1.6; }
-
         input { 
-            width: 100%; padding: 15px; border-radius: 15px; border: none;
-            background: rgba(255, 255, 255, 0.9); margin-bottom: 20px;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); font-size: 1rem;
-            text-align: center; outline: none;
+            width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #ffccd5;
+            margin-bottom: 20px; outline: none; font-size: 1rem; text-align: center;
         }
-
         .btn-group { position: relative; height: 140px; margin-top: 20px; }
-
         button { 
             padding: 15px 35px; font-size: 1.1rem; border-radius: 50px; 
-            border: none; cursor: pointer; font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: none; cursor: pointer; font-weight: 600; transition: 0.3s;
         }
-
-        #yesBtn { background: var(--primary); color: white; box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3); }
-        
-        #noBtn { 
-            background: #6c757d; color: white; position: absolute; 
-            left: 50%; transform: translateX(-50%); top: 80px;
-        }
-
+        #yesBtn { background: var(--primary); color: white; }
+        #noBtn { background: #6c757d; color: white; position: absolute; left: 50%; transform: translateX(-50%); top: 80px; }
         .hidden { display: none !important; }
-        .visible { display: block !important; animation: fadeIn 0.8s ease; }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .success-icon { font-size: 4rem; margin-bottom: 1rem; display: block; }
     </style>
 </head>
 <body>
@@ -89,25 +55,23 @@
 
     <div id="loginStep" class="container">
         <h1>For Someone Special</h1>
-        <p>Before we proceed, please tell me who you are...</p>
-        <input type="text" id="nameInput" placeholder="Your Name" autocomplete="off">
-        <button id="entryBtn" style="background: var(--primary); color: white;" onclick="nextStep()">Open Message</button>
+        <p>Please enter your name...</p>
+        <input type="text" id="nameInput" placeholder="Your Name">
+        <button id="startBtn" style="background: var(--primary); color: white;" onclick="nextStep()">Open Message</button>
     </div>
 
     <div id="questionStep" class="container hidden">
-        <h1 id="greeting">Hi!</h1>
-        <p>I've been wanting to ask you this for a while...</p>
-        <p style="font-size: 1.4rem;">Will you be my Valentine? 🌹</p>
+        <h1 id="greeting"></h1>
+        <p>Will you be my Valentine? 🌹</p>
         <div class="btn-group">
-            <button id="yesBtn" onclick="celebrate()">Yes, I will!</button>
+            <button id="mainYes" style="background: var(--primary); color: white;" onclick="celebrate()">Yes!</button>
             <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
         </div>
     </div>
 
     <div id="successStep" class="container hidden">
-        <span class="success-icon">🥰</span>
-        <h1>It's a Date!</h1>
-        <p>You've made me the happiest person! ❤️</p>
+        <h1>🥰 It's a Date!</h1>
+        <p>I can't wait! I've been notified. ❤️</p>
     </div>
 
     <script>
@@ -127,48 +91,36 @@
         function nextStep() {
             const name = document.getElementById('nameInput').value;
             if(name.trim() !== "") {
-                // Play music
-                music.play().catch(e => console.log("Audio waiting for interaction"));
-                
+                music.play().catch(() => console.log("Music waiting for interaction"));
                 document.getElementById('loginStep').classList.add('hidden');
-                const qStep = document.getElementById('questionStep');
-                qStep.classList.remove('hidden');
-                qStep.classList.add('visible');
+                document.getElementById('questionStep').classList.remove('hidden');
                 document.getElementById('greeting').innerText = "Hi " + name + " ✨";
-            } else {
-                alert("Please enter your name first! ❤️");
             }
         }
 
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
-            const padding = 100;
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding) + padding/2;
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding) + padding/2;
-            
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
-            noBtn.style.zIndex = "100";
         }
 
         function celebrate() {
             document.getElementById('questionStep').classList.add('hidden');
-            const sStep = document.getElementById('successStep');
-            sStep.classList.remove('hidden');
-            sStep.classList.add('visible');
-
-            // Replace with your real email before uploading
-            fetch("https://formsubmit.co/ajax/kandalakshya@gmail.com", {
+            document.getElementById('successStep').classList.remove('hidden');
+            
+            // Replace with your email!
+            fetch("https://formsubmit.co/ajax/YOUR_EMAIL_HERE", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    Answer: "YES! ❤️",
-                    Partner: document.getElementById('nameInput').value
+                    Message: "She said YES!",
+                    Name: document.getElementById('nameInput').value
                 })
             });
         }
     </script>
 </body>
 </html>
-
