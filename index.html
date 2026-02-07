@@ -8,12 +8,14 @@
     <style>
         :root { --primary: #ff4d6d; --secondary: #ff85a1; }
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body { 
             font-family: 'Quicksand', sans-serif; 
             background: radial-gradient(circle at center, #ffffff 0%, #ffdde1 100%);
             display: flex; justify-content: center; align-items: center; 
             height: 100vh; margin: 0; overflow: hidden; text-align: center;
         }
+
         .heart {
             position: absolute; color: var(--secondary);
             font-size: 20px; z-index: 1;
@@ -24,26 +26,38 @@
             20% { opacity: 0.6; }
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
+
         .container { 
-            background: rgba(255, 255, 255, 0.8); 
+            background: rgba(255, 255, 255, 0.85); 
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.5);
             padding: 2.5rem 1.5rem; border-radius: 30px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05); 
-            width: 85%; max-width: 380px; z-index: 10;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+            width: 90%; max-width: 380px; z-index: 10;
         }
+
         h1 { font-family: 'Dancing Script', cursive; color: var(--primary); font-size: 2.5rem; margin-bottom: 1rem; }
+        
         input { 
             width: 100%; padding: 15px; border-radius: 15px; border: 2px solid #ffccd5;
             margin-bottom: 20px; outline: none; font-size: 1rem; text-align: center;
         }
+
         .btn-group { position: relative; height: 140px; margin-top: 20px; }
+
         button { 
             padding: 15px 35px; font-size: 1.1rem; border-radius: 50px; 
-            border: none; cursor: pointer; font-weight: 600; transition: 0.3s;
+            border: none; cursor: pointer; font-weight: 600; transition: transform 0.2s;
         }
-        #yesBtn { background: var(--primary); color: white; }
-        #noBtn { background: #6c757d; color: white; position: absolute; left: 50%; transform: translateX(-50%); top: 80px; }
+
+        .primary-btn { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3); }
+
+        #noBtn { 
+            background: #6c757d; color: white; position: absolute; 
+            left: 50%; transform: translateX(-50%); top: 80px; z-index: 100;
+        }
+
+        /* Essential Utility Classes */
         .hidden { display: none !important; }
     </style>
 </head>
@@ -53,30 +67,29 @@
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="loginStep" class="container">
+    <div id="step1" class="container">
         <h1>For Someone Special</h1>
         <p>Please enter your name...</p>
-        <input type="text" id="nameInput" placeholder="Your Name">
-        <button id="startBtn" style="background: var(--primary); color: white;" onclick="nextStep()">Open Message</button>
+        <input type="text" id="nameInput" placeholder="Your Name" autocomplete="off">
+        <button class="primary-btn" onclick="goToStep2()">Open Message</button>
     </div>
 
-    <div id="questionStep" class="container hidden">
-        <h1 id="greeting"></h1>
+    <div id="step2" class="container hidden">
+        <h1 id="greeting">Hi!</h1>
         <p>Will you be my Valentine? 🌹</p>
         <div class="btn-group">
-            <button id="mainYes" style="background: var(--primary); color: white;" onclick="celebrate()">Yes!</button>
-            <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+            <button class="primary-btn" onclick="goToStep3()">Yes!</button>
+            <button id="noBtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
         </div>
     </div>
 
-    <div id="successStep" class="container hidden">
+    <div id="step3" class="container hidden">
         <h1>🥰 It's a Date!</h1>
-        <p>I can't wait! I've been notified. ❤️</p>
+        <p>I can't wait! Check your phone, I'm coming to see you! ❤️</p>
     </div>
 
     <script>
-        const music = document.getElementById('bgMusic');
-
+        // Background Hearts
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
@@ -88,31 +101,43 @@
         }
         setInterval(createHeart, 400);
 
-        function nextStep() {
+        // Step 1 to Step 2
+        function goToStep2() {
             const name = document.getElementById('nameInput').value;
-            if(name.trim() !== "") {
-                music.play().catch(() => console.log("Music waiting for interaction"));
-                document.getElementById('loginStep').classList.add('hidden');
-                document.getElementById('questionStep').classList.remove('hidden');
-                document.getElementById('greeting').innerText = "Hi " + name + " ✨";
+            if (name.trim() === "") {
+                alert("Please enter your name ❤️");
+                return;
             }
+
+            // Play music
+            const music = document.getElementById('bgMusic');
+            music.play().catch(() => console.log("Audio waiting for user interaction"));
+
+            // Switch screens
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+            document.getElementById('greeting').innerText = "Hi " + name + " ✨";
         }
 
-        function moveButton() {
+        // Logic for the dodging button
+        function moveNoButton() {
             const noBtn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            const padding = 50;
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding);
+            
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
         }
 
-        function celebrate() {
-            document.getElementById('questionStep').classList.add('hidden');
-            document.getElementById('successStep').classList.remove('hidden');
-            
-            // Replace with your email!
-            fetch("https://formsubmit.co/ajax/YOUR_EMAIL_HERE", {
+        // Final Step
+        function goToStep3() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+
+            // Send Email Notification
+            fetch("https://formsubmit.co/ajax/kandalakshya@gmail.com", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
