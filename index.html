@@ -3,339 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>An Exclusive Invitation | ❤️</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@200;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
-    
+    <title>A Special Surprise ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #d4af37;
-            --rose-gold: #e5b3bb;
-            --deep-rose: #ff4d6d;
-            --glass-bg: rgba(255, 255, 255, 0.15);
-            --border: rgba(212, 175, 55, 0.3);
-            --text-dark: #2d3436;
+            --pink-light: #ffdde1;
+            --pink-dark: #ff4d6d;
+            --soft-white: rgba(255, 255, 255, 0.9);
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-            cursor: none; /* Custom luxury cursor */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body { 
+            font-family: 'Quicksand', sans-serif; 
+            background: linear-gradient(135deg, #fff0f3 0%, #ffdde1 100%);
+            display: flex; justify-content: center; align-items: center; 
+            height: 100vh; margin: 0; overflow: hidden; text-align: center;
         }
 
-        /* Custom Luxury Cursor (Follower) */
-        #cursor {
-            width: 20px; height: 20px;
-            border: 1px solid var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-        }
-
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            font-family: 'Montserrat', sans-serif;
-            background: #000; /* Deep black for luxury contrast */
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Animated Cinematic Background */
-        .video-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2c3e50 100%);
-            z-index: -2;
-        }
-
-        #canvas-bg {
-            position: fixed;
-            top: 0; left: 0;
-            z-index: -1;
-        }
-
-        /* Luxury Card Container */
-        .luxury-card {
-            position: relative;
-            width: 90%;
-            max-width: 450px;
-            padding: 4rem 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--border);
-            border-radius: 2px; /* Sharp luxury edges or subtle rounding */
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
-            text-align: center;
-            overflow: hidden;
-            z-index: 10;
-            opacity: 0;
-            transform: translateY(50px);
-            animation: cardEntrance 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-        }
-
-        @keyframes cardEntrance {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Decorative Gold Frame */
-        .luxury-card::before {
-            content: '';
+        /* Floating Hearts Animation */
+        .heart-float {
             position: absolute;
-            top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border: 1px solid var(--gold);
-            pointer-events: none;
-            opacity: 0.5;
+            color: var(--pink-dark);
+            font-size: 20px;
+            user-select: none;
+            z-index: 1;
+            animation: floatUp 5s linear infinite;
+            opacity: 0;
         }
 
-        h1 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
-            letter-spacing: 5px;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            margin-bottom: 2rem;
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        .script-text {
-            font-family: 'Great Vibes', cursive;
-            color: var(--rose-gold);
-            font-size: 3rem;
-            margin: 1rem 0;
-            display: block;
+        /* The Main Romantic Card */
+        .card { 
+            background: var(--soft-white); 
+            padding: 2.5rem 1.5rem; 
+            border-radius: 40px; 
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); 
+            width: 85%; max-width: 380px; 
+            z-index: 10;
+            border: 4px solid white;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        p {
-            color: rgba(255,255,255,0.8);
-            font-weight: 200;
-            letter-spacing: 1px;
-            line-height: 1.8;
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
         }
 
-        /* Input Styling */
-        .input-wrapper {
-            position: relative;
-            margin: 2rem 0;
-        }
+        h1 { font-family: 'Pacifico', cursive; color: var(--pink-dark); font-size: 2.2rem; margin-bottom: 1rem; }
+        p { font-weight: 400; color: #555; font-size: 1.1rem; margin-bottom: 2rem; }
 
-        input {
-            width: 100%;
-            background: transparent;
-            border: none;
-            border-bottom: 1px solid var(--gold);
-            padding: 10px 0;
-            color: #fff;
-            font-size: 1.2rem;
-            text-align: center;
-            outline: none;
-            font-family: 'Montserrat', sans-serif;
+        /* Input */
+        input { 
+            width: 100%; padding: 15px; border-radius: 20px; border: 2px solid #ffccd5;
+            margin-bottom: 20px; outline: none; font-size: 1rem; text-align: center;
             transition: 0.3s;
         }
+        input:focus { border-color: var(--pink-dark); }
 
-        input::placeholder { color: rgba(255,255,255,0.3); font-weight: 200; }
+        .btn-container { position: relative; height: 150px; margin-top: 20px; }
 
-        /* Golden Button Styling */
-        .gold-btn {
-            position: relative;
-            padding: 15px 40px;
-            background: transparent;
-            color: var(--gold);
-            border: 1px solid var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            overflow: hidden;
-            transition: 0.5s;
-            margin-top: 1rem;
+        button { 
+            padding: 15px 35px; font-size: 1.1rem; border-radius: 50px; 
+            border: none; cursor: pointer; font-weight: 600; 
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .gold-btn::after {
-            content: '';
-            position: absolute;
-            top: 0; left: -100%;
-            width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.4), transparent);
-            transition: 0.5s;
+        .yes-btn { 
+            background-color: var(--pink-dark); color: white; 
+            box-shadow: 0 8px 20px rgba(255, 77, 109, 0.3);
         }
+        .yes-btn:hover { transform: scale(1.1); }
 
-        .gold-btn:hover::after { left: 100%; }
-        .gold-btn:hover { background: var(--gold); color: #000; box-shadow: 0 0 20px var(--gold); }
-
-        /* The dodging No button - Luxury Edition */
-        #noBtn {
-            background: transparent;
-            color: rgba(255,255,255,0.4);
-            border: 1px solid rgba(255,255,255,0.1);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 100px;
+        .no-btn { 
+            background-color: #adb5bd; color: white; 
+            position: absolute; left: 50%; transform: translateX(-50%); top: 80px;
         }
 
         .hidden { display: none !important; }
 
-        /* Particles */
-        .particle {
-            position: absolute;
-            background: radial-gradient(circle, var(--rose-gold) 0%, transparent 70%);
-            border-radius: 50%;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        /* Success screen icon */
-        .shimmer-text {
-            background: linear-gradient(90deg, #d4af37, #fff, #d4af37);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-        }
-
-        @keyframes shimmer {
-            to { background-position: 200% center; }
-        }
+        .success-img { font-size: 4rem; margin-bottom: 1rem; display: block; }
     </style>
 </head>
 <body>
-
-    <div id="cursor"></div>
-    <canvas id="canvas-bg"></canvas>
-    <div class="video-overlay"></div>
 
     <audio id="bgMusic" loop>
         <source src="music.mp3" type="audio/mpeg">
     </audio>
 
-    <div id="step1" class="luxury-card">
-        <h1>Private Invitation</h1>
-        <p>Kindly identify yourself to view the contents of this message.</p>
-        <div class="input-wrapper">
-            <input type="text" id="nameInput" placeholder="YOUR NAME" autocomplete="off">
-        </div>
-        <button class="gold-btn" onclick="goToStep2()">Unlock Message</button>
+    <div id="step1" class="card">
+        <h1>Hi There! ❤️</h1>
+        <p>I have a tiny secret waiting for you. Who am I talking to?</p>
+        <input type="text" id="userName" placeholder="Your sweet name..." autocomplete="off">
+        <button class="yes-btn" onclick="startExperience()">Open It</button>
     </div>
 
-    <div id="step2" class="luxury-card hidden">
-        <h1 id="greeting">Hi</h1>
-        <p>It would be my greatest honor if you would consider being my</p>
-        <span class="script-text shimmer-text">Valentine</span>
-        <div style="position: relative; height: 180px; margin-top: 2rem;">
-            <button class="gold-btn" onclick="goToStep3()">Accept Invitation</button>
-            <button id="noBtn" class="gold-btn" onmouseover="moveNo()" onclick="moveNo()">Decline</button>
+    <div id="step2" class="card hidden">
+        <h1 id="personalGreeting">Hi!</h1>
+        <p>Will you be my Valentine? 🌹</p>
+        <div class="btn-container">
+            <button class="yes-btn" id="mainYes" onclick="sayYes()">Yes, I'd love to!</button>
+            <button class="no-btn" id="noBtn" onmouseover="dodgeNo()" onclick="dodgeNo()">No</button>
         </div>
     </div>
 
-    <div id="step3" class="luxury-card hidden">
-        <span class="script-text shimmer-text" style="font-size: 4rem;">Yes</span>
-        <h1>Reservation Confirmed</h1>
-        <p>A notification has been dispatched. <br>I look forward to our evening together.</p>
-        <div style="margin-top: 2rem; color: var(--gold); letter-spacing: 5px;">❤️ ❤️ ❤️</div>
+    <div id="step3" class="card hidden">
+        <span class="success-img">🥰</span>
+        <h1>Yay! It's a Date!</h1>
+        <p>You've made me so happy. I've been notified of your answer! ❤️</p>
     </div>
 
     <script>
-        // Custom Cursor Logic
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
-
-        // Background Particles Canvas
-        const canvas = document.getElementById('canvas-bg');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function initCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        // Hearts Animation
+        function spawnHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-float');
+            const variants = ['❤️', '💖', '💘', '💕', '🌸'];
+            heart.innerHTML = variants[Math.floor(Math.random() * variants.length)];
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
         }
+        setInterval(spawnHeart, 300);
 
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 1 - 0.5;
-                this.speedY = Math.random() * 1 - 0.5;
+        function startExperience() {
+            const name = document.getElementById('userName').value;
+            if (name.trim() === "") {
+                alert("Please enter your name first! ❤️");
+                return;
             }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x > canvas.width) this.x = 0;
-                if (this.x < 0) this.x = canvas.width;
-                if (this.y > canvas.height) this.y = 0;
-                if (this.y < 0) this.y = canvas.height;
-            }
-            draw() {
-                ctx.fillStyle = 'rgba(212, 175, 55, 0.3)';
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        function createParticles() {
-            for (let i = 0; i < 100; i++) particles.push(new Particle());
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-
-        window.addEventListener('resize', initCanvas);
-        initCanvas();
-        createParticles();
-        animate();
-
-        // Step Navigation
-        function goToStep2() {
-            const name = document.getElementById('nameInput').value;
-            if(!name) return alert("Entrance requires a name.");
             
+            // Start Music
             document.getElementById('bgMusic').play().catch(() => {});
+
+            document.getElementById('step1').classList.add('hidden');
+            const s2 = document.getElementById('step2');
+            s2.classList.remove('hidden');
+            document.getElementById('personalGreeting').innerText = "Hi " + name + " ✨";
+        }
+
+        function dodgeNo() {
+            const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('mainYes');
             
-            document.getElementById('step1').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('step1').classList.add('hidden');
-                const s2 = document.getElementById('step2');
-                s2.classList.remove('hidden');
-                document.getElementById('greeting').innerText = "For " + name;
-            }, 800);
+            // Make "Yes" grow slightly as she struggles
+            const currentScale = yesBtn.style.transform.replace('scale(', '').replace(')', '') || 1;
+            yesBtn.style.transform = `scale(${parseFloat(currentScale) + 0.05})`;
+
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
         }
 
-        function moveNo() {
-            const btn = document.getElementById('noBtn');
-            const x = Math.random() * (window.innerWidth - 150);
-            const y = Math.random() * (window.innerHeight - 50);
-            btn.style.position = 'fixed';
-            btn.style.left = x + 'px';
-            btn.style.top = y + 'px';
-        }
+        function sayYes() {
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
 
-        function goToStep3() {
-            document.getElementById('step2').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('step2').classList.add('hidden');
-                document.getElementById('step3').classList.remove('hidden');
-            }, 800);
-
-            // API Notification
+            // Send Notification
             fetch("https://formsubmit.co/ajax/kandalakshya@gmail.com", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    Status: "Invitation Accepted",
-                    Client: document.getElementById('nameInput').value
+                    Message: "SHE SAID YES! ❤️",
+                    Partner: document.getElementById('userName').value
                 })
             });
         }
